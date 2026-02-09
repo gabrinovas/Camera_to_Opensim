@@ -126,19 +126,14 @@ class DataProcessingNode(Node):
                         x = (u - self.cx) * z / self.fx
                         y = (v - self.cy) * z / self.fy
                         
-                        # OpenSim Coordinate System Conversion might be needed here
-                        # Typically OpenSim Y is UP. RealSense Y is DOWN.
-                        # RealSense: X Right, Y Down, Z Forward
-                        # OpenSim: X Forward, Y Up, Z Right (Model dependent, but usually Y is up)
-                        # Let's keep camera frame for TRC and handle rotation in IK tool or here.
-                        # Standard TRC is usually Y-up.
-                        # Rot: X_trc = Z_cam, Y_trc = -Y_cam, Z_trc = X_cam ??? 
-                        # This depends on the OpenSim model. 
-                        # Let's just raw log first.
+                        # Coordinate System Conversion: Camera (Opencv) -> OpenSim (Y-up)
+                        # Camera: X-Right, Y-Down, Z-Forward
+                        # OpenSim (Typ): X-Forward, Y-Up, Z-Right
+                        # Transformation: os_X = cam_Z, os_Y = -cam_Y, os_Z = cam_X
                         
-                        frame_data[f'{kp.name}_X'] = x
-                        frame_data[f'{kp.name}_Y'] = y
-                        frame_data[f'{kp.name}_Z'] = z
+                        frame_data[f'{kp.name}_X'] = z
+                        frame_data[f'{kp.name}_Y'] = -y
+                        frame_data[f'{kp.name}_Z'] = x
                     else:
                         frame_data[f'{kp.name}_X'] = np.nan
                         frame_data[f'{kp.name}_Y'] = np.nan

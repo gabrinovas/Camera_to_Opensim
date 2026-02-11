@@ -23,13 +23,13 @@ def generate_launch_description():
     
     pose2sim_path_arg = DeclareLaunchArgument(
         'pose2sim_path',
-        default_value='',
+        default_value='/home/drims/static/drims2_ws/src/camera_to_opensim_core/pose2sim',
         description='Path to Pose2Sim repository (if not installed)'
     )
     
     sports2d_path_arg = DeclareLaunchArgument(
         'sports2d_path',
-        default_value='',
+        default_value='/home/drims/static/drims2_ws/src/camera_to_opensim_core/Sports2D',
         description='Path to Sports2D repository (if not installed)'
     )
 
